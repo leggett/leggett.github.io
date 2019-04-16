@@ -5,8 +5,33 @@ permalink: /404.html
 <html>
 <head>
 	<title>404'ed!</title>
+	<style type="text/css">
+		.flex {
+			display: flex;
+			justify-content: center;
+			height: 100vh;
+		}
+
+		.flex p {
+			align-self: center;
+			max-width: 500px;
+			text-align: center;
+		}
+		p b {
+			text-decoration: none;
+			display: block;
+			font-size: 5em;
+			padding-bottom: 25px;
+			color: #ccc;
+		}
+	</style>
 </head>
 <body>
-	Something went wrong... start at the <a href="index.html">beginning</a>?
+	<div class="flex">
+		<p>
+			<b>404'ed!</b>
+	  		Something went wrong... start at the <a href="/index.html">beginning</a>?
+		</p>
+	</div>
 </body>
 </html>
