@@ -7,34 +7,38 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
 	<style type="text/css"> 
-		html { 
-			background: url(bg.jpg) no-repeat center center fixed; 
-			background-size: cover;
-			background-color: #f5f5f5;
-		}
 		html, body { 
 			font-family: 'Quicksand', sans-serif;
 			margin: 0px; 
 			width: 100%; 
 			height: 100%; 
 			font-size: 12px;
+			background-color: #f5f5f5;
 		} 
 		#page { 
 			border: 0px; 
-			width: 80%; 
-			text-align: left; 
-			padding: 50px 10%;
-			line-height: 2em;
-			font-size: 150%;
+			width: 600px;
+			margin: 0 auto;
+			text-align: center; 
+			padding: 10vh 10%;
+			line-height: 2.5em;
+			font-size: 200%;
 			color: #000;
 		}
 		a, a:visited {
-			color: #999;
+			color: #36c;
 			text-decoration: underline;
 			border: none;
 		}
-		a:hover {
-			color: #000;
+		a[target="_new"], a[target="_new"]:visited {
+			padding: 0 10px;
+			color: #999;
+		}
+		b {
+			font-weight: 900;
+			background-color: #fca;
+			padding: 4px 10px;
+			border-radius: 4px;
 		}
 		span.name {
 			font-size: 175%;
@@ -56,33 +60,26 @@
 </head> 
 
 <body>
-
 	<div id="page"> 
-		<a href="me_big.jpg"><img src="me.png" width="100" height="100" /></a><br />
+		<a href="me_big.jpg"><img src="me.png" width="200" height="200" /></a><br />
 
 		<span class="name">MICHAEL LEGGETT</span><br>
-		SEATTLE<br><br>
+		SEATTLE, WASHINGTON<br><br>
 
-		2018 &mdash; Present<br>
-		Working on climate change by day<br>
-		as Director of Product at <a href="https://nori.com">Nori</a> and<br>
-		simplifying the web by night at <a href="https://simpl.fyi">simpl.fyi</a><br><br>
+		<b>2018 &mdash; Present</b><br>
+		Working on climate change as Director of Product at 
+		<a href="https://nori.com">Nori</a> and simplifying the web 
+		on the side at <a href="https://simpl.fyi">simpl.fyi</a>.<br><br>
 
-		2005 &mdash; 2018<br>
-		Designer at Google and Facebook<br><br>
+		<b>2005 &mdash; 2018</b><br>
+		Design Lead & Manager for 10 years at Google on Gmail, Inbox, 
+		Fi, Android, and more and 3 years at Facebook on Messenger and Ads.<br><br>
 
-		<a href="http://m.me/leggett" target="_new">Message Me</a><br>
-		<a href="http://twitter.com/leggett" target="_new">Twitter</a><br>
-		<a href="http://linkedin.com/in/leggett" target="_new">LinkedIn</a><br>
-	  	<a href="http://github.com/leggett" target="_new">GitHub</a><br />
-		<a onclick="showLinks()" id="moreButton">More</a>
-		<div id="moreLinks">
-			<a href="http://facebook.com/leggett" target="_new">Facebook</a><br />
-			<a href="http://instagram.com/leggett" target="_new">Instagram</a><br />
-		  	<a href="http://youtube.com/leggett" target="_new">YouTube</a><br />
-		</div>
+		<a href="http://m.me/leggett" target="_new">Messager</a>
+		<a href="http://twitter.com/leggett" target="_new">Twitter</a>
+		<a href="http://linkedin.com/in/leggett" target="_new">LinkedIn</a>
+	  	<a href="http://github.com/leggett" target="_new">GitHub</a><br><br>
  	</div>
-
 </body>
 
 <script>
