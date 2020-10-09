@@ -63,16 +63,17 @@
         cursor: pointer;
       }
       /* Extra small devices (portrait phones, less than 576px) */
-      @media only screen and (max-width: 599.98px) {
+      @media screen and (max-device-width: 420px) {
         #page {
           margin: 0;
           padding: 4vh;
-          zoom: 125%;
+          font-size: 4em;
           width: calc(100% - 8vh);
-          line-height: 170%;
+          line-height: 200%;
         }
         a img {
-          zoom: 110%;
+          width: 350px;
+          height: 350px;
         }
       }
     </style>
