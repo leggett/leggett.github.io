@@ -14473,7 +14473,7 @@
     let nextDay = todayNumber + 1;
 
     if (dayNumber !== -1) {
-      gameDay = new Date(firstDay + 86400000 * dayNumber);
+      gameDay = new Date(firstDay + 86400000 * parseInt(dayNumber));
       nextDay = parseInt(dayNumber) + 1;
     }
 
@@ -14769,6 +14769,8 @@
             {
               key: "showHelpModal",
               value: function () {
+                // Don't show the game instructions on load
+                return;
                 var e = this.$game.querySelector("game-modal");
                 e.appendChild(document.createElement("game-help")),
                   e.setAttribute("open", "");
