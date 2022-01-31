@@ -14464,16 +14464,16 @@
     Va.innerHTML =
       '\n<button id="reveal">reveal</button>\n<button id="shake">shake</button>\n<button id="bounce">bounce</button>\n<button id="toast">toast</button>\n<button id="modal">modal</button>\n';
 
-    var gameDay = new Date();
+    let gameDay = new Date();
     // let daysBack = location.search?.split("=")[1] || 0;
     // gameDay = new Date(gameDay - 86400000 * daysBack);
-    let firstDay = new Date("2021/06/19");
-    let dayNumber = location.search?.split("=")[1] || -1;
-    let todayNumber = Math.floor((gameDay - firstDay) / 86400000);
+    const firstDay = new Date("2021/06/19");
+    const dayNumber = location.search?.split("=")[1] || -1;
+    const todayNumber = Math.floor((gameDay - firstDay) / 86400000);
     let nextDay = todayNumber + 1;
 
     if (dayNumber !== -1) {
-      gameDay = new Date(firstDay + 86400000 * parseInt(dayNumber));
+      gameDay = new Date(firstDay.getTime() + 86400000 * parseInt(dayNumber));
       nextDay = parseInt(dayNumber) + 1;
     }
 
