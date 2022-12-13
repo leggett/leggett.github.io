@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <style>
+      body {
+        margin: 100px;
+      }
+      table {
+        border-spacing: 0;
+        margin-bottom: 20px;
+      }
+      .img {
+        width: 40px;
+        background: #ddd;
+      }
+      .text {
+        background-color: #cc0000;
+        width: auto;
+        color: white;
+        font-family: monospace;
+        font-size: 16px;
+        padding: 20px 100px;
+        min-width: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td class="img">
+          <img
+            style="max-width: 100px"
+            src="https://en.wikipedia.org/static/images/project-logos/enwiki-2x.png"
+          />
+        </td>
+        <td class="text">
+          TD:has(IMG) {width:40px; background: #ddd;}<br />IMG {max-width:100px}
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td class="img">
+          <img
+            style="max-width: 100%"
+            src="https://en.wikipedia.org/static/images/project-logos/enwiki-2x.png"
+          />
+        </td>
+        <td class="text">
+          TD:has(IMG) {width:40px; background: #ddd;}<br />IMG {max-width:100%}
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td class="img">
+          <img
+            style="max-width: max(100%, 100px)"
+            src="https://en.wikipedia.org/static/images/project-logos/enwiki-2x.png"
+          />
+        </td>
+        <td class="text">
+          TD:has(IMG) {width:40px; background: #ddd;}<br />IMG
+          {max-width:max(100%, 100px)}
+        </td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td>
+          <img
+            src="https://en.wikipedia.org/static/images/project-logos/enwiki-2x.png"
+          />
+        </td>
+        <td class="text">TD:has(IMG) {}<br />IMG {}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td class="img">
+          <img
+            src="https://en.wikipedia.org/static/images/project-logos/enwiki-2x.png"
+          />
+        </td>
+        <td class="text">
+          TD:has(IMG) {width:40px; background: #ddd;}<br />IMG {}
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+
+<!-- src="https://ci5.googleusercontent.com/proxy/mx6F5KLfK0vZSX8-OF2USXg4Fl7qPBftMVklUrewlf-ma-R0O23DgNVnOYqhC7Inx9waPaj9P3bH0x5i912k5ZMs1cvqaac3yWWhPzt9uxr_5J6HcMvz0qPya4BK7KwQm6vcXvxXwEQM0r7QyuwLGrk2O67oJIBHWXYTUpfxIRIVUUya0-lDVaBTIDmCIcpJAVB_O4Q5rNZS67mhROEugyFJauA9Dfk=s0-d-e1-ft#https://d36urhup7zbd7q.cloudfront.net/5b70f349-f6e6-41b4-b1e0-7100ad748e5f/IMG_20190808_122019.crop_697x697_0,0.preview.format_png.resize_200x.jpeg" -->
