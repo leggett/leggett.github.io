@@ -12,8 +12,9 @@
       #root,
       body {
         margin: 0;
-        height: 100%;
         width: 100% !important;
+        /* height: 100% !important; */
+        height: 100%;
         height: -webkit-fill-available;
       }
       body {
@@ -33,23 +34,24 @@
         z-index: 1;
         width: 100px;
         height: 100vh;
+        height: -webkit-fill-available;
         background-color: blue;
         display: flex;
         align-items: center;
-
         color: white;
         flex-direction: column;
       }
       .top-section {
         margin-top: 30px;
-        background-color: #0000ff66;
+        background-color: #ffffff99;
       }
       .bottom-section {
         display: flex;
         flex-direction: column;
         height: 100%;
+
         justify-content: flex-end;
-        background-color: #0000ff66;
+        background-color: #ffffff66;
       }
     </style>
   </head>
@@ -58,7 +60,7 @@
       <div class="mapApp">
         <div class="navbar">
           <div class="top-section">Top</div>
-          <div class="bottom-section">Bottom<br />bottom<br />bottom</div>
+          <div class="bottom-section">Bot<br /><br />Bot<br /><br />Bot</div>
         </div>
       </div>
     </div>
