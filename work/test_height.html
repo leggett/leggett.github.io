@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
+      #root,
+      body {
+        margin: 0;
+        height: 100% !important;
+        width: 100% !important;
+      }
+      body {
+        min-height: 100vh;
+      }
+      .mapApp {
+        position: absolute;
+        left: 100px;
+        top: 0;
+        width: calc(100vw - 100px);
+      }
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 31px 0;
+        z-index: 1;
+        width: 100px;
+        height: 100vh;
+        background-color: blue;
+        display: flex;
+        align-items: center;
+
+        color: white;
+        flex-direction: column;
+      }
+      .top-section {
+        margin-top: 30px;
+        background-color: #0000ff66;
+      }
+      .bottom-section {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: flex-end;
+        background-color: #0000ff66;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="mapApp">
+        <div class="navbar">
+          <div class="top-section">Top</div>
+          <div class="bottom-section">Bottom<br />bottom<br />bottom</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
