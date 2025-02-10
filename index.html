@@ -22,7 +22,7 @@
         margin: 0 auto;
         text-align: center;
         padding: 10vh 10%;
-        line-height: 2.5em;
+        line-height: 2em;
         font-size: 200%;
         color: #000;
       }
@@ -39,7 +39,8 @@
       }
       b {
         font-weight: 900;
-        background-color: #fca;
+        /* background-color: #fca; */
+        background-color: #4dd97c;
         padding: 4px 10px;
         border-radius: 4px;
       }
@@ -50,15 +51,35 @@
       b {
         font-weight: 700;
       }
-      a img {
-        padding-bottom: 20px;
-      }
       #moreLinks {
         display: none;
       }
       #moreButton {
         cursor: pointer;
       }
+
+      /* Profile image mask */
+      a img {
+        outline: none;
+        margin-bottom: 20px;
+        border-radius: 66% 34% 57% 43% / 38% 55% 45% 62%;
+        animation: profile 30s linear infinite;
+      }
+      @keyframes profile {
+        0% {
+          border-radius: 66% 34% 57% 43% / 38% 55% 45% 62%;
+        }
+        25% {
+          border-radius: 31% 69% 69% 31% / 32% 68% 32% 68%;
+        }
+        60% {
+          border-radius: 50% 50% 29% 71% / 30% 71% 29% 70%;
+        }
+        100% {
+          border-radius: 66% 34% 57% 43% / 38% 55% 45% 62%;
+        }
+      }
+
       /* Extra small devices (portrait phones, less than 576px) */
       @media screen and (max-device-width: 420px) {
         #page {
@@ -72,26 +93,31 @@
           width: 350px;
           height: 350px;
         }
+        a[target="_new"] {
+          padding: 0px;
+          display: block;
+        }
       }
     </style>
   </head>
 
   <body>
     <div id="page">
-      <a href="me_big.jpg"><img src="me.png" width="200" height="200" /></a><br />
+      <a href="me_big.jpg"><img src="me.jpg" width="200" height="200" /></a><br />
 
       <span class="name">MICHAEL LEGGETT</span><br />
       SEATTLE, WASHINGTON<br /><br />
 
-      <b>Presently</b><br />
-      Working on climate change at
-      <a href="https://ever.green">Ever.green</a><br />
+      <b>2021 &mdash; Now</b><br />
+      Working on clean energy and climate change at
+      <a href="https://ever.green">Ever.green</a>
       and simplifying the web at
       <a href="https://simpl.fyi">Simplify</a>.<br /><br />
 
-      <b>2018 &mdash; 2020</b><br />
-      Worked on climate change as<br />
-      Director of Product at <a href="https://en.m.wikipedia.org/wiki/Nori_(company)">Nori</a>.<br /><br />
+      <b>2018 &mdash; 2021</b><br />
+      Worked on carbon removal and<br />climate change at
+      <a href="https://en.m.wikipedia.org/wiki/Nori_(company)">Nori</a> and
+      <a href="https://ecosystemservicesmarket.org">ESMC</a>.<br /><br />
 
       <b>2005 &mdash; 2018</b><br />
       Design Lead & Manager for 10 years at Google (Gmail, Inbox, Fi, Android, Finance, Search, and more) and for 3
@@ -101,6 +127,7 @@
       <a href="http://x.com/leggett" target="_new">Twitter</a>
       <a href="http://linkedin.com/in/leggett" target="_new">LinkedIn</a>
       <a href="http://github.com/leggett" target="_new">GitHub</a><br /><br />
+      <img src="ML.png" width="150" height="100" />
     </div>
   </body>
 </html>
