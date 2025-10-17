@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Text Tools</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: #f3f3f3;
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 40px 20px 100px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        max-width: 700px;
+        width: 100%;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        font-weight: 600;
+      }
+
+      .tabs {
+        display: flex;
+        border-bottom: 2px solid #e1e5e9;
+        margin-bottom: 30px;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 12px 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        color: #666;
+        transition: all 0.3s ease;
+        border-bottom: 3px solid transparent;
+        border-radius: 8px 8px 0 0;
+        transform: none !important;
+      }
+
+      .tab.active {
+        color: #667eea;
+        border-bottom-color: #667eea;
+        background: #f8f9fa;
+      }
+
+      .tab:hover {
+        background: #f8f9fa;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+        font-weight: 500;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      input[type="text"]:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+        font-family: inherit;
+      }
+
+      button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        width: 100%;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+      }
+
+      .result {
+        margin-top: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+      }
+
+      .result h3 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .result-url {
+        background: white;
+        padding: 12px;
+        border-radius: 6px;
+        border: 1px solid #e1e5e9;
+        word-break: break-all;
+        font-family: "Monaco", "Menlo", monospace;
+        font-size: 14px;
+        color: #333;
+      }
+
+      .copy-btn {
+        background: #28a745;
+        margin-top: 10px;
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+
+      .copy-btn:hover {
+        background: #218838;
+      }
+
+      .description {
+        background: #e3f2fd;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        color: #1565c0;
+        font-size: 14px;
+      }
+
+      .copy-badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #28a745;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: all 0.3s ease;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .copy-badge.show {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .result {
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>URL Text Tools</h1>
+
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('link')">Link to text</button>
+        <button class="tab" onclick="switchTab('encode')">Encode Text</button>
+        <button class="tab" onclick="switchTab('decode')">Decode URL</button>
+      </div>
+
+      <!-- Link to text tab -->
+      <div id="link" class="tab-content active">
+        <div class="description">
+          <strong>Link to text:</strong> Generate a complete URL with text fragment that will highlight specific text on
+          a webpage or PDF.
+        </div>
+        <form id="linkForm">
+          <div class="form-group">
+            <label for="linkUrl">URL:</label>
+            <input type="text" id="linkUrl" placeholder="https://example.com/page" required />
+          </div>
+          <div class="form-group">
+            <label for="linkText">Text to highlight:</label>
+            <textarea
+              id="linkText"
+              placeholder="Enter the text you want to highlight on the page..."
+              required
+            ></textarea>
+          </div>
+          <button type="submit">Create Link</button>
+        </form>
+        <div class="result" id="linkResult" style="display: none">
+          <div class="copy-badge" id="linkBadge">Link copied!</div>
+          <h3>Generated Link:</h3>
+          <div class="result-url" id="linkResultUrl"></div>
+          <button class="copy-btn" onclick="copyToClipboard('linkResultUrl', 'linkBadge')">Copy Link</button>
+        </div>
+      </div>
+
+      <!-- Encode Tab -->
+      <div id="encode" class="tab-content">
+        <div class="description">
+          <strong>Encode Text:</strong> Convert text to URL-encoded format for use in URLs. For text longer than 8
+          words, it will use the first 4 and last 4 words.
+        </div>
+        <form id="encodeForm">
+          <div class="form-group">
+            <label for="encodeText">Text to encode:</label>
+            <textarea id="encodeText" placeholder="Enter the text you want to encode..." required></textarea>
+          </div>
+          <button type="submit">Encode Text</button>
+        </form>
+        <div class="result" id="encodeResult" style="display: none">
+          <div class="copy-badge" id="encodeBadge">Text copied!</div>
+          <h3>Encoded Text:</h3>
+          <div class="result-url" id="encodeResultUrl"></div>
+          <button class="copy-btn" onclick="copyToClipboard('encodeResultUrl', 'encodeBadge')">Copy</button>
+        </div>
+      </div>
+
+      <!-- Decode Tab -->
+      <div id="decode" class="tab-content">
+        <div class="description">
+          <strong>Decode URL:</strong> Extract and decode text from a URL that contains text fragments.
+        </div>
+        <form id="decodeForm">
+          <div class="form-group">
+            <label for="decodeUrl">URL with text fragment:</label>
+            <input type="text" id="decodeUrl" placeholder="https://example.com/page#:~:text=encoded%20text" required />
+          </div>
+          <button type="submit">Decode URL</button>
+        </form>
+        <div class="result" id="decodeResult" style="display: none">
+          <div class="copy-badge" id="decodeBadge">Text copied!</div>
+          <h3>Decoded Text:</h3>
+          <div class="result-url" id="decodeResultUrl"></div>
+          <button class="copy-btn" onclick="copyToClipboard('decodeResultUrl', 'decodeBadge')">Copy Text</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Tab switching functionality
+      function switchTab(tabName) {
+        // Hide all tab contents
+        document.querySelectorAll(".tab-content").forEach((content) => {
+          content.classList.remove("active");
+        });
+
+        // Remove active class from all tabs
+        document.querySelectorAll(".tab").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        // Show selected tab content
+        document.getElementById(tabName).classList.add("active");
+
+        // Add active class to clicked tab
+        event.target.classList.add("active");
+
+        // Update URL with tab parameter
+        updateURL(tabName);
+      }
+
+      function updateURL(tabName) {
+        const url = new URL(window.location);
+        url.searchParams.set("tool", tabName);
+        window.history.replaceState({}, "", url);
+      }
+
+      function getTabFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("tool");
+      }
+
+      function initializeTab() {
+        const tabFromURL = getTabFromURL();
+        if (tabFromURL && ["encode", "link", "decode"].includes(tabFromURL)) {
+          // Switch to the tab from URL
+          document.querySelectorAll(".tab-content").forEach((content) => {
+            content.classList.remove("active");
+          });
+          document.querySelectorAll(".tab").forEach((tab) => {
+            tab.classList.remove("active");
+          });
+
+          document.getElementById(tabFromURL).classList.add("active");
+          document.querySelector(`[onclick="switchTab('${tabFromURL}')"]`).classList.add("active");
+        }
+      }
+
+      // Encode form handler
+      document.getElementById("encodeForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const text = document.getElementById("encodeText").value.trim();
+
+        if (!text) {
+          alert("Please enter some text to encode.");
+          return;
+        }
+
+        const encodedText = encodeTextForUrl(text);
+        document.getElementById("encodeResultUrl").textContent = encodedText;
+        document.getElementById("encodeResult").style.display = "block";
+      });
+
+      // Link form handler
+      document.getElementById("linkForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const url = document.getElementById("linkUrl").value.trim();
+        const text = document.getElementById("linkText").value.trim();
+
+        if (!url || !text) {
+          alert("Please provide both URL and text to highlight.");
+          return;
+        }
+
+        const encodedText = encodeTextForFragment(text);
+        const resultUrl = `${url}#:~:text=${encodedText}`;
+
+        document.getElementById("linkResultUrl").textContent = resultUrl;
+        document.getElementById("linkResult").style.display = "block";
+      });
+
+      // Decode form handler
+      document.getElementById("decodeForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const url = document.getElementById("decodeUrl").value.trim();
+
+        if (!url) {
+          alert("Please enter a URL to decode.");
+          return;
+        }
+
+        try {
+          const decodedText = decodeTextFromUrl(url);
+          document.getElementById("decodeResultUrl").textContent = decodedText;
+          document.getElementById("decodeResult").style.display = "block";
+        } catch (error) {
+          alert("Invalid URL or no text fragment found.");
+        }
+      });
+
+      function encodeTextForUrl(text) {
+        // For general encoding, just encode the full text
+        return encodeURIComponent(text);
+      }
+
+      function encodeTextForFragment(text) {
+        // For #:~:text= fragments, use the truncation logic
+        const words = text.split(/\s+/).filter((word) => word.length > 0);
+
+        if (words.length <= 8) {
+          return encodeURIComponent(text);
+        } else {
+          const firstFour = words.slice(0, 4).join(" ");
+          const lastFour = words.slice(-4).join(" ");
+          return `${encodeURIComponent(firstFour)},${encodeURIComponent(lastFour)}`;
+        }
+      }
+
+      function decodeTextFromUrl(url) {
+        // Extract text fragment from URL
+        const textFragmentMatch = url.match(/#:~:text=(.+)$/);
+
+        if (!textFragmentMatch) {
+          throw new Error("No text fragment found in URL");
+        }
+
+        const encodedText = textFragmentMatch[1];
+
+        // Handle comma-separated format (first 4, last 4 words)
+        if (encodedText.includes(",")) {
+          const parts = encodedText.split(",");
+          if (parts.length === 2) {
+            const firstPart = decodeURIComponent(parts[0]);
+            const lastPart = decodeURIComponent(parts[1]);
+            return `${firstPart} ... ${lastPart}`;
+          }
+        }
+
+        // Handle single encoded text
+        return decodeURIComponent(encodedText);
+      }
+
+      function copyToClipboard(elementId, badgeId) {
+        const resultElement = document.getElementById(elementId);
+        const text = resultElement.textContent;
+
+        // Try modern clipboard API first
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard
+            .writeText(text)
+            .then(() => {
+              showCopySuccess(event.target, badgeId);
+            })
+            .catch((err) => {
+              console.log("Clipboard API failed, falling back to text selection:", err);
+              fallbackCopyToClipboard(resultElement, event.target, badgeId);
+            });
+        } else {
+          // Fallback for older browsers
+          fallbackCopyToClipboard(resultElement, event.target, badgeId);
+        }
+      }
+
+      function fallbackCopyToClipboard(element, button, badgeId) {
+        // Create a temporary textarea to select the text
+        const textarea = document.createElement("textarea");
+        textarea.value = element.textContent;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-999999px";
+        textarea.style.top = "-999999px";
+        document.body.appendChild(textarea);
+
+        try {
+          textarea.select();
+          textarea.setSelectionRange(0, 99999); // For mobile devices
+          const successful = document.execCommand("copy");
+          document.body.removeChild(textarea);
+
+          if (successful) {
+            showCopySuccess(button, badgeId);
+          } else {
+            // If all else fails, just select the text in the result element
+            selectText(element);
+            showCopySuccess(button, badgeId, "Text selected");
+          }
+        } catch (err) {
+          document.body.removeChild(textarea);
+          // Final fallback: select the text in the result element
+          selectText(element);
+          showCopySuccess(button, badgeId, "Text selected");
+        }
+      }
+
+      function selectText(element) {
+        if (window.getSelection) {
+          const selection = window.getSelection();
+          const range = document.createRange();
+          range.selectNodeContents(element);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+      }
+
+      function showCopySuccess(button, badgeId, message = "Copied!") {
+        // Show the badge
+        if (badgeId) {
+          const badge = document.getElementById(badgeId);
+          if (badge) {
+            badge.textContent = message;
+            badge.classList.add("show");
+            setTimeout(() => {
+              badge.classList.remove("show");
+            }, 2000);
+          }
+        }
+
+        // Update button text and style
+        const originalText = button.textContent;
+        button.textContent = message;
+        button.style.background = "#28a745";
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.background = "";
+        }, 2000);
+      }
+
+      // Initialize tab from URL when page loads
+      document.addEventListener("DOMContentLoaded", initializeTab);
+    </script>
+  </body>
+</html>
