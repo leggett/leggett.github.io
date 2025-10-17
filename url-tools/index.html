@@ -113,7 +113,7 @@
       }
 
       button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #007bff; /* linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
         color: white;
         border: none;
         padding: 14px 28px;
@@ -151,16 +151,58 @@
         font-family: "Monaco", "Menlo", monospace;
         font-size: 14px;
         color: #333;
+        user-select: all;
+        transition: background-color 0.3s ease;
+      }
+
+      .result-url.highlighted {
+        background: #e8f5e8;
+        border-color: #28a745;
+      }
+
+      .result-textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 16px;
+        font-family: inherit;
+        background: white;
+        color: #333;
+        resize: vertical;
+        min-height: 120px;
+        max-height: 400px;
+        overflow-y: auto;
+        transition: border-color 0.3s ease;
+        height: 120px; /* Default height matching input textarea */
+      }
+
+      .result-textarea:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .result-textarea.highlighted {
+        background: #e8f5e8;
+        border-color: #28a745;
       }
 
       .copy-btn {
-        background: #28a745;
+        background: #007bff;
         margin-top: 10px;
         padding: 8px 16px;
         font-size: 14px;
       }
 
       .copy-btn:hover {
+        background: #0056b3;
+      }
+
+      .copy-btn.copied {
+        background: #28a745;
+      }
+
+      .copy-btn.copied:hover {
         background: #218838;
       }
 
@@ -171,6 +213,27 @@
         margin-bottom: 20px;
         color: #1565c0;
         font-size: 14px;
+      }
+
+      .warning {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+        color: #856404;
+        font-size: 14px;
+        border-left: 4px solid #f39c12;
+        border-radius: 0px 8px 8px 0;
+      }
+
+      .warning ul {
+        margin: 8px 0 0 0;
+        padding-left: 20px;
+      }
+
+      .warning li {
+        margin-bottom: 4px;
       }
 
       .radio-group {
@@ -196,30 +259,8 @@
         color: #667eea;
       }
 
-      .copy-badge {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background: #28a745;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 12px;
-        font-size: 12px;
-        font-weight: 600;
-        opacity: 0;
-        transform: scale(0.8);
-        transition: all 0.3s ease;
-        z-index: 10;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      }
-
-      .copy-badge.show {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      .result {
-        position: relative;
+      #textFragmentSection {
+        margin-top: 40px;
       }
     </style>
   </head>
@@ -271,19 +312,25 @@
           <button type="submit">Create Link</button>
         </form>
         <div class="result" id="linkResult" style="display: none">
-          <div class="copy-badge" id="linkBadge">Link copied!</div>
           <h3>Generated Link:</h3>
           <div class="result-url" id="linkResultUrl"></div>
-          <button class="copy-btn" onclick="copyToClipboard('linkResultUrl', 'linkBadge')">Copy Link</button>
+          <button class="copy-btn" onclick="copyToClipboard('linkResultUrl')">Copy Link</button>
+
+          <div class="warning" id="linkWarning">
+            <b>⚠️ <a id="testLink" target="_new" href="#">Test your link before sharing</a></b
+            >. Text linking doesn't always work reliably, especially in PDFs. If text linking fails, try:
+            <ul>
+              <li>Using a shorter, more unique text block</li>
+              <li>Linking to a specific page instead (for PDFs)</li>
+              <li>Using the first few words of a paragraph</li>
+            </ul>
+          </div>
         </div>
       </div>
 
       <!-- Encode Tab -->
       <div id="encode" class="tab-content">
-        <div class="description">
-          <strong>Encode Text:</strong> Convert text to URL-encoded format for use in URLs. For text longer than 8
-          words, it will use the first 4 and last 4 words.
-        </div>
+        <div class="description"><strong>Encode Text:</strong> Convert text to URL-encoded format for use in URLs.</div>
         <form id="encodeForm">
           <div class="form-group">
             <label for="encodeText">Text to encode:</label>
@@ -292,30 +339,32 @@
           <button type="submit">Encode Text</button>
         </form>
         <div class="result" id="encodeResult" style="display: none">
-          <div class="copy-badge" id="encodeBadge">Text copied!</div>
           <h3>Encoded Text:</h3>
           <div class="result-url" id="encodeResultUrl"></div>
-          <button class="copy-btn" onclick="copyToClipboard('encodeResultUrl', 'encodeBadge')">Copy</button>
+          <button class="copy-btn" onclick="copyToClipboard('encodeResultUrl')">Copy</button>
         </div>
       </div>
 
       <!-- Decode Tab -->
       <div id="decode" class="tab-content">
-        <div class="description">
-          <strong>Decode URL:</strong> Extract and decode text from a URL that contains text fragments.
-        </div>
+        <div class="description"><strong>Decode URL:</strong> Extract and decode text from a URL.</div>
         <form id="decodeForm">
           <div class="form-group">
-            <label for="decodeUrl">URL with text fragment:</label>
+            <label for="decodeUrl">URL to decode:</label>
             <input type="text" id="decodeUrl" placeholder="https://example.com/page#:~:text=encoded%20text" required />
           </div>
           <button type="submit">Decode URL</button>
         </form>
         <div class="result" id="decodeResult" style="display: none">
-          <div class="copy-badge" id="decodeBadge">Text copied!</div>
           <h3>Decoded Text:</h3>
-          <div class="result-url" id="decodeResultUrl"></div>
-          <button class="copy-btn" onclick="copyToClipboard('decodeResultUrl', 'decodeBadge')">Copy Text</button>
+          <textarea class="result-textarea" id="decodeResultUrl" readonly></textarea>
+          <button class="copy-btn" onclick="copyToClipboard('decodeResultUrl')">Copy Text</button>
+
+          <div id="textFragmentSection" style="display: none">
+            <h3>Link to page with the text fragment:</h3>
+            <textarea class="result-textarea" id="decodeTextFragment" readonly></textarea>
+            <button class="copy-btn" onclick="copyToClipboard('decodeTextFragment')">Copy Text Fragment</button>
+          </div>
         </div>
       </div>
     </div>
@@ -390,8 +439,13 @@
       document.getElementById("linkForm").addEventListener("submit", function (e) {
         e.preventDefault();
 
-        const url = document.getElementById("linkUrl").value.trim();
+        let url = document.getElementById("linkUrl").value.trim();
         const linkType = document.querySelector('input[name="linkType"]:checked').value;
+
+        // Add https:// if no protocol is specified
+        if (url && !url.match(/^https?:\/\//)) {
+          url = "https://" + url;
+        }
 
         let resultUrl;
 
@@ -414,6 +468,17 @@
 
         document.getElementById("linkResultUrl").textContent = resultUrl;
         document.getElementById("linkResult").style.display = "block";
+
+        // Set the test link href to the generated URL
+        document.getElementById("testLink").href = resultUrl;
+
+        // Show warning only for text linking (not page linking)
+        const warning = document.getElementById("linkWarning");
+        if (linkType === "text") {
+          warning.style.display = "block";
+        } else {
+          warning.style.display = "none";
+        }
       });
 
       // Radio button change handler
@@ -469,11 +534,46 @@
         }
 
         try {
-          const decodedText = decodeTextFromUrl(url);
-          document.getElementById("decodeResultUrl").textContent = decodedText;
+          // Decode the full URL/string
+          const fullDecoded = decodeURIComponent(url);
+          const textarea = document.getElementById("decodeResultUrl");
+          textarea.value = fullDecoded;
+
+          // Auto-size the textarea if content is longer than default
+          textarea.style.height = "auto";
+          const contentHeight = textarea.scrollHeight;
+          if (contentHeight > 120) {
+            textarea.style.height = Math.min(contentHeight, 400) + "px";
+          } else {
+            textarea.style.height = "120px"; // Use default height
+          }
+
+          // Check for text fragment and decode it separately
+          const textFragmentMatch = url.match(/#:~:text=(.+)$/);
+          const textFragmentSection = document.getElementById("textFragmentSection");
+          const textFragmentTextarea = document.getElementById("decodeTextFragment");
+
+          if (textFragmentMatch) {
+            const textFragment = decodeTextFromUrl(url);
+            textFragmentTextarea.value = textFragment;
+
+            // Auto-size the text fragment textarea
+            textFragmentTextarea.style.height = "auto";
+            const fragmentHeight = textFragmentTextarea.scrollHeight;
+            if (fragmentHeight > 120) {
+              textFragmentTextarea.style.height = Math.min(fragmentHeight, 400) + "px";
+            } else {
+              textFragmentTextarea.style.height = "120px"; // Use default height
+            }
+
+            textFragmentSection.style.display = "block";
+          } else {
+            textFragmentSection.style.display = "none";
+          }
+
           document.getElementById("decodeResult").style.display = "block";
         } catch (error) {
-          alert("Invalid URL or no text fragment found.");
+          alert("Invalid URL or unable to decode.");
         }
       });
 
@@ -519,31 +619,34 @@
         return decodeURIComponent(encodedText);
       }
 
-      function copyToClipboard(elementId, badgeId) {
+      function copyToClipboard(elementId) {
         const resultElement = document.getElementById(elementId);
-        const text = resultElement.textContent;
+        const text = resultElement.value || resultElement.textContent;
+        const button = event.target;
 
         // Try modern clipboard API first
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard
             .writeText(text)
             .then(() => {
-              showCopySuccess(event.target, badgeId);
+              console.log("Clipboard API success");
+              showCopySuccess(button);
             })
             .catch((err) => {
               console.log("Clipboard API failed, falling back to text selection:", err);
-              fallbackCopyToClipboard(resultElement, event.target, badgeId);
+              fallbackCopyToClipboard(resultElement, button);
             });
         } else {
-          // Fallback for older browsers
-          fallbackCopyToClipboard(resultElement, event.target, badgeId);
+          console.log("Clipboard API not available, using fallback");
+          fallbackCopyToClipboard(resultElement, button);
         }
       }
 
-      function fallbackCopyToClipboard(element, button, badgeId) {
+      function fallbackCopyToClipboard(element, button) {
+        console.log("Using fallback copy method");
         // Create a temporary textarea to select the text
         const textarea = document.createElement("textarea");
-        textarea.value = element.textContent;
+        textarea.value = element.value || element.textContent;
         textarea.style.position = "fixed";
         textarea.style.left = "-999999px";
         textarea.style.top = "-999999px";
@@ -556,17 +659,20 @@
           document.body.removeChild(textarea);
 
           if (successful) {
-            showCopySuccess(button, badgeId);
+            console.log("Fallback copy successful");
+            showCopySuccess(button);
           } else {
+            console.log("Fallback copy failed, selecting text");
             // If all else fails, just select the text in the result element
             selectText(element);
-            showCopySuccess(button, badgeId, "Text selected");
+            showCopySuccess(button);
           }
         } catch (err) {
+          console.log("Fallback copy error:", err);
           document.body.removeChild(textarea);
           // Final fallback: select the text in the result element
           selectText(element);
-          showCopySuccess(button, badgeId, "Text selected");
+          showCopySuccess(button);
         }
       }
 
@@ -580,31 +686,62 @@
         }
       }
 
-      function showCopySuccess(button, badgeId, message = "Copied!") {
-        // Show the badge
-        if (badgeId) {
-          const badge = document.getElementById(badgeId);
-          if (badge) {
-            badge.textContent = message;
-            badge.classList.add("show");
-            setTimeout(() => {
-              badge.classList.remove("show");
-            }, 2000);
+      function showCopySuccess(button, message = "Copied!") {
+        console.log("showCopySuccess called");
+        // Update button to show copied state
+        button.classList.add("copied");
+        button.textContent = "Copy link (copied)";
+
+        // Highlight the result URL
+        const resultElement = document.getElementById(button.getAttribute("onclick").match(/'([^']+)'/)[1]);
+        if (resultElement) {
+          resultElement.classList.add("highlighted");
+          // Select the text
+          if (window.getSelection) {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(resultElement);
+            selection.removeAllRanges();
+            selection.addRange(range);
           }
         }
 
-        // Update button text and style
-        const originalText = button.textContent;
-        button.textContent = message;
-        button.style.background = "#28a745";
+        // Reset after 3 seconds
         setTimeout(() => {
-          button.textContent = originalText;
-          button.style.background = "";
-        }, 2000);
+          button.classList.remove("copied");
+          button.textContent = button.textContent.replace(" (copied)", "");
+          if (resultElement) {
+            resultElement.classList.remove("highlighted");
+          }
+        }, 3000);
       }
 
-      // Initialize tab from URL when page loads
-      document.addEventListener("DOMContentLoaded", initializeTab);
+      // Hide results when form inputs change
+      function hideResults() {
+        document.getElementById("linkResult").style.display = "none";
+        document.getElementById("encodeResult").style.display = "none";
+        document.getElementById("decodeResult").style.display = "none";
+        document.getElementById("textFragmentSection").style.display = "none";
+      }
+
+      // Add event listeners to hide results when inputs change
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeTab();
+
+        // Link form inputs
+        document.getElementById("linkUrl").addEventListener("input", hideResults);
+        document.getElementById("linkText").addEventListener("input", hideResults);
+        document.getElementById("linkPage").addEventListener("input", hideResults);
+        document.querySelectorAll('input[name="linkType"]').forEach((radio) => {
+          radio.addEventListener("change", hideResults);
+        });
+
+        // Encode form inputs
+        document.getElementById("encodeText").addEventListener("input", hideResults);
+
+        // Decode form inputs
+        document.getElementById("decodeUrl").addEventListener("input", hideResults);
+      });
     </script>
   </body>
 </html>
